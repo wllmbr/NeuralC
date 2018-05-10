@@ -6,8 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define LEARNING_RATE	0.05
+#define LEARNING_RATE	0.000005
 #define DEFAULT_GAIN	2.0
+#define TRAINED_THRESHOLD	0.0001
 
 /*Neural Node data structre */
 struct neuron{
@@ -16,6 +17,8 @@ struct neuron{
 	double vectorSum;
 	/* Node Gain */
 	double vectorGain;
+	/* Node Result */
+	double neuralState;
 	/* Number of incomming nodes that have applied their result */
 	uint32_t vectorInputCount;
 	/* Number of expected incoming nodes */

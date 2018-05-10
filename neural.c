@@ -7,19 +7,21 @@
 void runNeuron(struct neuron * node){
 	/* Calculate Neuron Output */
 
-	double neuralState = node->vectorSum * node->vectorGain;
+	node->neuralState = node->vectorSum * node->vectorGain;
+	printf("Node %lld had a sum of %f and produced a state of %f\n",node,node->vectorSum,node->neuralState );
 
 	/* Apply Output to all of the output nodes */
 
 	struct neuralLink * traversalPoint;
 	traversalPoint = node->pointingTo;
-	while(traversalPoint != NULL){
+	while(traversalPoint->next != NULL){
 		/* Check to make sure the target node is actually there... */
 		if(traversalPoint->targetNode == NULL){
-			printf("A node targeted doesn't exist, exiting before segfault\n");
+			// printf("Node %lld has no target nodes\n",node);
 			exit(ERR_MISSING_NODE);
 		}
-		traversalPoint->targetNode->vectorSum += neuralState;
+		// printf("Node %lld applied state to node %lld\n",node,traversalPoint->targetNode);
+		traversalPoint->targetNode->vectorSum += node->neuralState;
 		traversalPoint = traversalPoint->next;
 	}
 
@@ -54,17 +56,29 @@ void initNeuron(struct neuron *node){
 void addNeuralLink(struct neuron *source, struct neuron *destination){
 	struct neuralLink * traversalPoint;
 
+	printf("Linking Nodes %lld and %lld\n",source, destination);
+
 	traversalPoint = source->pointingTo;
 	/* Move to the end of the linked list */
 	while(traversalPoint->next != NULL){
+		printf("Node %lld already points to %lld\n",source,traversalPoint->targetNode);
 		traversalPoint = traversalPoint->next;
 	}
+	struct neuralLink * newLink;
+	newLink = (struct neuralLink *)malloc(sizeof(struct neuralLink));
+	newLink->next = NULL;
+	newLink->targetNode = NULL;
+	traversalPoint->next = newLink;
 	traversalPoint->targetNode = destination;
 
-	traversalPoint = destination->pointedToBy;
-	/* Move to the end of the linked list */
-	while(traversalPoint->next != NULL){
-		traversalPoint = traversalPoint->next;
-	}
-	traversalPoint->targetNode = source;
+	// traversalPoint = destination->pointedToBy;
+	// /* Move to the end of the linked list */
+	// while(traversalPoint->next != NULL){
+	// 	traversalPoint = traversalPoint->next;
+	// }
+	// traversalPoint->targetNode = source;
+
+	destination->vectorInputTotal++;
+
+	printf("Node %lld now has a reference to node %lld\n",source,traversalPoint->targetNode);
 }
