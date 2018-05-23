@@ -6,17 +6,20 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define LEARNING_RATE	0.000005
-#define DEFAULT_GAIN	2.0
-#define TRAINED_THRESHOLD	0.0001
+#define LEARNING_RATE	0.5
+#define DEFAULT_WEIGHT	0.25
+#define TRAINED_THRESHOLD	0.001
+
+#define DEFAULT_RANDOM_SEED	0xdeadbeef
 
 /*Neural Node data structre */
 struct neuron{
 	uint32_t neuronID;
 	/* Input Summation */
 	double vectorSum;
+	double oldSum;
 	/* Node Gain */
-	double vectorGain;
+	double vectorBias;
 	/* Node Result */
 	double neuralState;
 	/* Number of incomming nodes that have applied their result */
@@ -32,15 +35,19 @@ struct neuron{
 /*Linked list for dynamically connecting nodes */
 struct neuralLink{
 	struct neuron * targetNode;
+	double weight;
 	struct neuralLink * next;
 };
 
 /*Init Functions */
-void initNeuron(struct neuron *node);
+void initNeuron(struct neuron *node, uint32_t ID);
 void addNeuralLink(struct neuron *source, struct neuron *destination);
 
 void runNeuron(struct neuron * node);
-// void learnNeuron(struct neuron * node);
+void learnNeuron(struct neuron * node, double error);
+
+double activation(double input);
+double activationdx(double input);
 
 
 #define ERR_MISSING_NODE	10
