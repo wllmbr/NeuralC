@@ -8,7 +8,7 @@
 
 #include "neural.h"
 
-#define TRAINED_LIMIT	0.01
+#define TRAINED_LIMIT	0.0001
 
 typedef uint16_t LAYER_ID;
 typedef uint32_t NODE_ID;

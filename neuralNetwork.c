@@ -114,10 +114,17 @@ double trainNetwork(struct nNetwork *net, double *input, double *output){
 		double result;
 		result = net->nodeList[net->nodeCount - 1].neuralState;
 
+		if(result != result){
+			fprintf(stderr, "Network created NaN result.\n");
+			exit(-1);
+		}
+
 		double errorTerm = *output - result;
 
 		printf("Error Term %.3f ",errorTerm);
 		fflush(stdout);
+
+
 
 		/* Test if error has changed enough since last time break*/
 		if(!(firstRound)){

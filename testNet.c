@@ -18,17 +18,11 @@ int main(){
 	/* Create a shitty four node net */
 	struct nNetwork net;
 
-	initNetwork(&net, 12);
+	initNetwork(&net, 6);
 
 	addLayer(&net,1);
 	addLayer(&net,5);
 	addLayer(&net,25);
-	addLayer(&net,125);
-	addLayer(&net,625);
-	addLayer(&net,3125);
-	addLayer(&net,3125);
-	addLayer(&net,625);
-	addLayer(&net,125);
 	addLayer(&net,25);
 	addLayer(&net,5);
 	addLayer(&net,1);
