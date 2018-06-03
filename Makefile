@@ -1,10 +1,10 @@
 CC = gcc
-OPT =  
+OPT =  -g
 EF = -Wall -Wno-format
 LINKS = -lm
 EXE = shittyNet
 BUILD = bld
-LIBS = $(BUILD)/$(NRL).o 
+LIBS = $(BUILD)/$(NRL).o $(BUILD)/$(NET).o 
 NRL = neural
 NET = neuralNetwork
 MAIN = testNet.c
@@ -19,8 +19,8 @@ $(EXE): $(MAIN) $(LIBS)
 $(BUILD)/$(NRL).o: $(NRL).c $(NRL).h
 	$(CC) $(EF) $(OPT) -o $@ -c $<
 
-#$(BUILD)/$(NET).o: $(NET).c $(NET).h
-#	$(CC) $(EF) $(OPT) -o $@ -c $<
+$(BUILD)/$(NET).o: $(NET).c $(NET).h
+	$(CC) $(EF) $(OPT) -o $@ -c $<
 
 remake:
 	rm -rf bld/*; make

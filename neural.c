@@ -58,18 +58,19 @@ void initNeuron(struct neuron *node, uint32_t ID){
 	node->pointedToBy->next = NULL;
 
 	// printf("Node ID %d initialized with gain %.3f\n",ID,node->vectorGain);
+	// printf("Node %lld allocated\n",node);
 
 }
 
 void addNeuralLink(struct neuron *source, struct neuron *destination){
 	struct neuralLink * traversalPoint;
 
-	printf("Linking Nodes %lld and %lld\n",source, destination);
+	// printf("Linking Nodes %lld and %lld\n",source, destination);
 
 	traversalPoint = source->pointingTo;
 	/* Move to the end of the linked list */
 	while(traversalPoint->next != NULL){
-		printf("Node %lld already points to %lld\n",source,traversalPoint->targetNode);
+		// printf("Node %lld already points to %lld\n",source,traversalPoint->targetNode);
 		traversalPoint = traversalPoint->next;
 	}
 	struct neuralLink * newLink;
@@ -82,7 +83,7 @@ void addNeuralLink(struct neuron *source, struct neuron *destination){
 
 	destination->vectorInputTotal++;
 
-	printf("Node %lld now has a reference to node %lld\n",source,traversalPoint->targetNode);
+	// printf("Node %lld now has a reference to node %lld\n",source,traversalPoint->targetNode);
 }
 
 double activation(double input){
@@ -105,7 +106,7 @@ void learnNeuron(struct neuron * node, double error){
 
 		traversalPoint->weight += LEARNING_RATE * ( error * activationdx(node->neuralState) * traversalPoint->targetNode->oldSum );
 
-		printf("| %d -> %.3f\t", node->neuronID, traversalPoint->weight);
+		// printf("| %d -> %.3f\t", node->neuronID, traversalPoint->weight);
 
 		traversalPoint = traversalPoint->next;
 	}

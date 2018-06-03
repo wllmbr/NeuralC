@@ -8,31 +8,34 @@
 
 #include "neural.h"
 
+#define TRAINED_LIMIT	0.01
+
+typedef uint16_t LAYER_ID;
+typedef uint32_t NODE_ID;
+
 /* Struct for holding object data */
 struct nNetwork{
-	struct neuron * nodeList;
-	/* List identifying which nodes belong to what layer
-		nodeID should be index, value is layer number */
-	uint32_t * layerList;
-	/* Current count of populated nodes */
-	uint32_t populatedNodes;
-	/* Last Populated Layer */
-	uint32_t populatedLayers;
-	uint32_t networkSize;
-}
+	struct neuron *nodeList;
+
+	LAYER_ID *layers;
+
+	LAYER_ID numLayers;
+	NODE_ID nodeCount;
+};
 
 /* Initialize Neural Network */
-void initNetwork(struct nNetwork *networkSpace, uint16_t layers);
+void initNetwork(struct nNetwork *networkSpace,LAYER_ID layerCount);
 
 /* Add a layer to the net */
-void addLayer(struct nNetwork *net, uint16_t nodeCount);
+void addLayer(struct nNetwork *net, NODE_ID nodeCount);
 
 /* Link Network */
 void linkNetwork(struct nNetwork *net);
 
 /* Learn Network */
-void learnNetwork(struct nNetwork *net);
+void learnNetwork(struct nNetwork *net, double error);
 
-void runNetwork(struct nNetwork *net, double input[], double output[]);
+double trainNetwork(struct nNetwork *net, double *input, double *output);
+double runNetwork(struct nNetwork *net, double *input);
 
 #endif
