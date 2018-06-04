@@ -120,6 +120,7 @@ double trainNetwork(struct nNetwork *net, double *input, double *output){
 		}
 
 		double errorTerm = *output - result;
+		errorTerm *= errorTerm;
 
 		printf("Error Term %.3f ",errorTerm);
 		fflush(stdout);
@@ -130,7 +131,7 @@ double trainNetwork(struct nNetwork *net, double *input, double *output){
 		if(!(firstRound)){
 			errorDeltaP = (errorTerm - lastError)/ lastError;
 			printf(" Error Delta %.3f\n",errorDeltaP);
-			if((fabs(errorDeltaP) < TRAINED_LIMIT) || (errorTerm == 0.0) || (fabs(errorTerm) < 0.001)){
+			if( (errorTerm == 0.0) || (fabs(errorTerm) < 0.001)){ // || (fabs(errorDeltaP) < 0.001)){
 				
 				return errorTerm;
 			}
@@ -147,6 +148,8 @@ double trainNetwork(struct nNetwork *net, double *input, double *output){
 
 double runNetwork(struct nNetwork *net, double *input){
 	NODE_ID currentNode = 0;
+
+	net->nodeList[0].vectorSum = *input;
 
 	for(currentNode =0; currentNode< net->nodeCount; currentNode++){
 		runNeuron(&(net->nodeList[currentNode]));

@@ -100,7 +100,7 @@ void learnNeuron(struct neuron * node, double error){
 	while(traversalPoint->next != NULL){
 		/* Check to make sure the target node is actually there... */
 		if(traversalPoint->targetNode == NULL){
-			// printf("Node %lld has no target nodes\n",node);
+			printf("Node %lld has no target nodes\n",node);
 			exit(ERR_MISSING_NODE);
 		}
 
